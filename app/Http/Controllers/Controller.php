@@ -10,4 +10,26 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function columnize($arr, $num) {
+        $total = count($arr);
+        $per_column = floor($total / $num);
+        $rearranged = array_chunk($arr, $per_column);
+
+        if($total % $num !== 0) {
+            $remainder = ($total - ($per_column * $num));
+
+            if(isset($rearranged[$num])) {
+                $i = 0;
+                foreach($rearranged[$num] as $remains) {
+                    array_push($rearranged[$i], $remains);
+                    $i++;
+                }
+
+                unset($rearranged[$num]);
+            }
+        }
+
+        return $rearranged;
+    }
 }

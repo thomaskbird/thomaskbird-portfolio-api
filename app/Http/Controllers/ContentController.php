@@ -6,10 +6,37 @@ use Validator;
 use Illuminate\Http\Request;
 
 use App\Models\Content;
-use App\Models\Tag;
-use App\Models\ContentTag;
+use App\Models\Skill;
 
 class ContentController extends Controller {
+
+    public function home() {
+        $portfolio = Content::where('status', 'published')->whereHas('tags', function($query) {
+            $query->where('slug', 'portfolio');
+        })->orderBy('created_at', 'desc')->paginate(Config('global.slide_limit'));
+
+        $post_latest = Content::whereHas('tags', function($query) {
+            $query->where('slug', 'blog');
+        })->orderBy('created_at', 'desc')->take(1)->first();
+
+        $post_news = Content::whereHas('tags', function($query) {
+            $query->where('slug', 'news');
+        })->orderBy('created_at', 'desc')->take(1)->first();
+
+        $post_testimonials = Content::whereHas('tags', function($query) {
+            $query->where('slug', 'testimonials');
+        })->orderBy('created_at', 'desc')->take(1)->first();
+
+        $skills = $this->columnize(Skill::orderBy('priority', 'asc')->get()->toArray(), 3);
+
+        return response(json_encode([
+            'portfolio' => $portfolio,
+            'skills' => $skills,
+            'post_latest' => $post_latest,
+            'post_news' => $post_news,
+            'post_testimonials' => $post_testimonials
+        ]));
+    }
 
     public function create(Request $request) {
         $input = $request->except('_token');
@@ -144,8 +171,13 @@ class ContentController extends Controller {
         return response(json_encode($contents));
     }
 
-    public function single($id) {
-        $content = Content::where('id', $id)->with('portfolio')->first();
+    public function single($identifier) {
+        if(is_numeric($identifier)) {
+            $content = Content::where('id', $identifier)->with('portfolio')->first();
+        } else {
+            $content = Content::where('slug', $identifier)->with('portfolio')->first();
+        }
+
         return response(json_encode($content));
     }
 
@@ -192,5 +224,17 @@ class ContentController extends Controller {
     public function remove($id) {
         $content = Content::find($id);
         $portfolio = Portfolio::where('post_id', $id)->first();
+    }
+
+    public function list_view($type) {
+        switch($type) {
+            case 'blog':
+                $content = Content::whereHas('tags', function($query) {
+                    $query->whereRaw('slug = ? AND version_of = ? AND type = ?', ['blog', 0, 'post']);
+                })->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
+            break;
+        }
+
+        return response(json_encode($content));
     }
 }
