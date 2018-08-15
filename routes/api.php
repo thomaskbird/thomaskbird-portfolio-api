@@ -24,4 +24,4 @@ Route::get('/home', ['as' => 'home', 'uses' => 'ContentController@home']);
 Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view']);
 Route::get('/content/{identifier}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
 
-Route::get('/list/{type}', ['as' => 'list_view', 'uses' => 'ContentController@list_view']);
+Route::get('/tag/{slug}', ['as' => 'tag_view', 'uses' => 'ContentController@tag_view']);
