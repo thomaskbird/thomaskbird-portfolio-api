@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/home', ['as' => 'home', 'uses' => 'ContentController@home']);
 
+Route::post('/contact', ['as' => 'contact', 'uses' => 'CommunicationController@contact']);
+
 Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view']);
 Route::get('/content/{identifier}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
 
