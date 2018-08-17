@@ -226,14 +226,10 @@ class ContentController extends Controller {
         $portfolio = Portfolio::where('post_id', $id)->first();
     }
 
-    public function list_view($type) {
-        switch($type) {
-            case 'blog':
-                $content = Content::whereHas('tags', function($query) {
-                    $query->whereRaw('slug = ? AND version_of = ? AND type = ?', ['blog', 0, 'post']);
-                })->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
-            break;
-        }
+    public function tag_view($slug) {
+        $content = Content::whereHas('tags', function($query) use ($slug) {
+            $query->whereRaw('slug = ? AND version_of = ? AND type = ?', [$slug, 0, 'post']);
+        })->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
 
         return response(json_encode($content));
     }
