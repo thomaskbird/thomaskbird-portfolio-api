@@ -22,7 +22,7 @@ class CommunicationController extends Controller {
         ]);
 
         if($validator->fails()) {
-            return response(json_encode($validator), 400);
+            return response(json_encode($validator->errors()), 400);
         } else {
 
             $contact = Contact::create($input);
