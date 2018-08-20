@@ -5,9 +5,10 @@ use Session;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Models\Content;
+use App\Models\Tag;
 use App\Models\Skill;
 use App\Models\Service;
+use App\Models\Content;
 
 class ContentController extends Controller {
 
