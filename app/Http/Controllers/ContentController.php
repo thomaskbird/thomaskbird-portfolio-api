@@ -239,4 +239,11 @@ class ContentController extends Controller {
         $services = Service::orderBy('created_at', 'desc')->paginate(config('global.paginate'));
         return response(json_encode($services));
     }
+
+    public function sidebar_data() {
+        $tags = Tag::all();
+        $recent_posts = Content::whereRaw('type = ? AND version_of = ? AND status = ?', ['post', 0, 'published'])->orderBy('created_at', 'desc')->take(5)->get();
+
+        return response(json_encode(['tags' => $tags, 'recent_posts' => $recent_posts]));
+    }
 }
