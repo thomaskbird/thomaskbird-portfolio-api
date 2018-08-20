@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Content;
 use App\Models\Skill;
+use App\Models\Service;
 
 class ContentController extends Controller {
 
