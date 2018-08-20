@@ -23,6 +23,7 @@ Route::get('/home', ['as' => 'home', 'uses' => 'ContentController@home']);
 
 Route::post('/contact', ['as' => 'contact', 'uses' => 'CommunicationController@contact']);
 
+Route::get('/services', ['as' => 'services', 'uses' => 'ContentController@services']);
 Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view']);
 Route::get('/content/{identifier}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
 

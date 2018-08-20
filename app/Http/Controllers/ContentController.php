@@ -233,4 +233,9 @@ class ContentController extends Controller {
 
         return response(json_encode($content));
     }
+
+    public function services() {
+        $services = Service::orderBy('created_at', 'desc')->paginate(config('global.paginate'));
+        return response(json_encode($services));
+    }
 }
