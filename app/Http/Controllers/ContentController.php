@@ -251,6 +251,6 @@ class ContentController extends Controller {
     public function search($term) {
         $content = Content::whereRaw('version_of = ? AND status = ? AND title LIKE ?', [0, 'published', '%'. $term .'%'])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
 
-        return response(json_encode(['content' => $content]));
+        return response(json_encode($content));
     }
 }
