@@ -247,4 +247,11 @@ class ContentController extends Controller {
 
         return response(json_encode(['tags' => $tags, 'recent_posts' => $recent_posts]));
     }
+
+    public function search(Request $request) {
+        $input = $request->all();
+        $content = Content::whereRaw('version_of = ? AND status = ? AND title LIKE ?', [0, 'published', '%'. $input['term'] .'%'])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
+
+        return response(json_encode(['content' => $content]));
+    }
 }
