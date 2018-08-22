@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 
 use App\Models\Tag;
+use App\Models\Job;
 use App\Models\Skill;
 use App\Models\Service;
 use App\Models\Content;
