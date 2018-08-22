@@ -253,4 +253,9 @@ class ContentController extends Controller {
 
         return response(json_encode($content));
     }
+
+    public function resume() {
+        $jobs = Job::orderBy('start', 'desc')->get();
+        return response(json_encode($jobs));
+    }
 }
