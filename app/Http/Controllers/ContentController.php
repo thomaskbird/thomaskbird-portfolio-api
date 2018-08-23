@@ -178,23 +178,23 @@ class ContentController extends Controller {
         switch($contentType) {
             case 'skill':
                 if(is_numeric($identifier)) {
-                    $content = Skill::where('id', $identifier)->with('portfolio')->first();
+                    $content = Skill::where('id', $identifier)->first();
                 } else {
-                    $content = Skill::where('slug', $identifier)->with('portfolio')->first();
+                    $content = Skill::where('slug', $identifier)->first();
                 }
             break;
             case 'job':
                 if(is_numeric($identifier)) {
-                    $content = Job::where('id', $identifier)->with('portfolio')->first();
+                    $content = Job::where('id', $identifier)->first();
                 } else {
-                    $content = Job::where('slug', $identifier)->with('portfolio')->first();
+                    $content = Job::where('slug', $identifier)->first();
                 }
             break;
             case 'service':
                 if(is_numeric($identifier)) {
-                    $content = Service::where('id', $identifier)->with('portfolio')->first();
+                    $content = Service::where('id', $identifier)->first();
                 } else {
-                    $content = Service::where('slug', $identifier)->with('portfolio')->first();
+                    $content = Service::where('slug', $identifier)->first();
                 }
             break;
             default:
