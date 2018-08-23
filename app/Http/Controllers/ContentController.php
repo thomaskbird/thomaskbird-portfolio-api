@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Content;
 use App\Models\Skill;
+use App\Models\Service;
+use App\Models\Job;
+
 
 class ContentController extends Controller {
 
@@ -171,11 +174,36 @@ class ContentController extends Controller {
         return response(json_encode($contents));
     }
 
-    public function single($identifier) {
-        if(is_numeric($identifier)) {
-            $content = Content::where('id', $identifier)->with('portfolio')->first();
-        } else {
-            $content = Content::where('slug', $identifier)->with('portfolio')->first();
+    public function single($identifier, $contentType = false) {
+        switch($contentType) {
+            case 'skill':
+                if(is_numeric($identifier)) {
+                    $content = Skill::where('id', $identifier)->with('portfolio')->first();
+                } else {
+                    $content = Skill::where('slug', $identifier)->with('portfolio')->first();
+                }
+            break;
+            case 'job':
+                if(is_numeric($identifier)) {
+                    $content = Job::where('id', $identifier)->with('portfolio')->first();
+                } else {
+                    $content = Job::where('slug', $identifier)->with('portfolio')->first();
+                }
+            break;
+            case 'service':
+                if(is_numeric($identifier)) {
+                    $content = Service::where('id', $identifier)->with('portfolio')->first();
+                } else {
+                    $content = Service::where('slug', $identifier)->with('portfolio')->first();
+                }
+            break;
+            default:
+                if(is_numeric($identifier)) {
+                    $content = Content::where('id', $identifier)->with('portfolio')->first();
+                } else {
+                    $content = Content::where('slug', $identifier)->with('portfolio')->first();
+                }
+            break;
         }
 
         return response(json_encode($content));
