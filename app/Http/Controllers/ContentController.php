@@ -199,9 +199,9 @@ class ContentController extends Controller {
             break;
             default:
                 if(is_numeric($identifier)) {
-                    $content = Content::where('id', $identifier)->with('portfolio')->first();
+                    $content = Content::with('parent', 'portfolio')->where('id', $identifier)->with('portfolio')->first();
                 } else {
-                    $content = Content::where('slug', $identifier)->with('portfolio')->first();
+                    $content = Content::with('parent', 'portfolio')->where('slug', $identifier)->with('portfolio')->first();
                 }
             break;
         }
