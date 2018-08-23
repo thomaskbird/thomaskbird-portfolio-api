@@ -187,7 +187,7 @@ class ContentController extends Controller {
                 if(is_numeric($identifier)) {
                     $content = Job::where('id', $identifier)->first();
                 } else {
-                    $content = Job::where('slug', $identifier)->first();
+                    $content = Job::where('company', $identifier)->first();
                 }
             break;
             case 'service':
