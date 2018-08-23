@@ -21,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/home', ['as' => 'home', 'uses' => 'ContentController@home']);
 
+Route::post('/contact', ['as' => 'contact', 'uses' => 'CommunicationController@contact']);
+Route::get('/sidebar_data', ['as' => 'sidebar_data', 'uses' => 'ContentController@sidebar_data']);
+Route::get('/resume', ['as' => 'resume', 'uses' => 'ContentController@resume']);
+Route::get('/search/{term}', ['as' => 'search', 'uses' => 'ContentController@search']);
+
+Route::get('/services', ['as' => 'services', 'uses' => 'ContentController@services']);
 Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view']);
 Route::get('/content/{identifier}/{contentType?}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
 

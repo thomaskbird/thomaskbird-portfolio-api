@@ -5,11 +5,11 @@ use Session;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Models\Content;
+use App\Models\Tag;
+use App\Models\Job;
 use App\Models\Skill;
 use App\Models\Service;
-use App\Models\Job;
-
+use App\Models\Content;
 
 class ContentController extends Controller {
 
@@ -260,5 +260,28 @@ class ContentController extends Controller {
         })->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
 
         return response(json_encode($content));
+    }
+
+    public function services() {
+        $services = Service::orderBy('created_at', 'desc')->paginate(config('global.paginate'));
+        return response(json_encode($services));
+    }
+
+    public function sidebar_data() {
+        $tags = Tag::all();
+        $recent_posts = Content::whereRaw('type = ? AND version_of = ? AND status = ?', ['post', 0, 'published'])->orderBy('created_at', 'desc')->take(5)->get();
+
+        return response(json_encode(['tags' => $tags, 'recent_posts' => $recent_posts]));
+    }
+
+    public function search($term) {
+        $content = Content::whereRaw('version_of = ? AND status = ? AND title LIKE ?', [0, 'published', '%'. $term .'%'])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
+
+        return response(json_encode($content));
+    }
+
+    public function resume() {
+        $jobs = Job::orderBy('start', 'desc')->get();
+        return response(json_encode($jobs));
     }
 }
