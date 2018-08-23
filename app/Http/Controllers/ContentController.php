@@ -14,7 +14,7 @@ use App\Models\Content;
 class ContentController extends Controller {
 
     public function home() {
-        $portfolio = Content::where('status', 'published')->whereHas('tags', function($query) {
+        $portfolio = Content::with('portfolio')->where('status', 'published')->whereHas('tags', function($query) {
             $query->where('slug', 'portfolio');
         })->orderBy('created_at', 'desc')->paginate(Config('global.slide_limit'));
 
