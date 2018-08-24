@@ -255,7 +255,7 @@ class ContentController extends Controller {
     }
 
     public function tag_view($slug) {
-        $content = Content::whereHas('tags', function($query) use ($slug) {
+        $content = Content::with('portfolio')->whereHas('tags', function($query) use ($slug) {
             $query->whereRaw('slug = ? AND version_of = ? AND type = ?', [$slug, 0, 'post']);
         })->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
 
