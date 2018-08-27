@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: http://thomaskbird.com');
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User-Agent");
 
 use Illuminate\Http\Request;
 
