@@ -1,5 +1,6 @@
 <?php
 $origin = $_SERVER['HTTP_ORIGIN'];
+echo $origin; exit;
 if($origin === 'http://localhost:8020' || $origin === 'http://thomaskbird.com') {
     header('Access-Control-Allow-Origin: '. $origin);
 }
