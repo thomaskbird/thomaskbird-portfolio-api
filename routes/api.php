@@ -1,5 +1,9 @@
 <?php
-header('Access-Control-Allow-Origin: http://thomaskbird.com');
+$origin = $_SERVER['HTTP_ORIGIN'];
+if($origin === 'http://localhost:8020' || $origin === 'http://thomaskbird.com') {
+    header('Access-Control-Allow-Origin: '. $origin);
+}
+
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User-Agent");
 
 use Illuminate\Http\Request;
@@ -31,3 +35,5 @@ Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view'])
 Route::get('/content/{identifier}/{contentType?}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
 
 Route::get('/tag/{slug}', ['as' => 'tag_view', 'uses' => 'ContentController@tag_view']);
+
+// todo: Integrate old content editing routes and functionality into api
