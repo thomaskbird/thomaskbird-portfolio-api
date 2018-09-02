@@ -1,5 +1,12 @@
 <?php
 
+Route::group(['middleware' => 'web'], function () {
+
+    Route::get('/login', ['as' => 'login_form', 'uses' => 'PublicController@login']);
+    Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
+
+});
+
 Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function() {
 
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
