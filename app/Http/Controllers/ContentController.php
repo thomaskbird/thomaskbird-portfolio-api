@@ -56,14 +56,22 @@ class ContentController extends Controller {
             $content = Content::create($input);
 
             if($content) {
-                return response(json_encode($content));
+
+                $request->session()->put('notification', [
+                    'class' => 'success',
+                    'msg' => 'Content created'
+                ]);
+
             } else {
-                return response(json_encode([
-                    'errors' => [
-                        'Uh oh, something went wrong please try again!'
-                    ]
-                ]), 500);
+
+                $request->session()->put('notification', [
+                    'class' => 'danger',
+                    'msg' => 'Uh oh, something went wrong please try again!'
+                ]);
+
             }
+
+            return back();
         }
     }
 
@@ -83,7 +91,7 @@ class ContentController extends Controller {
 
         $temp_content->save();
 
-        return response(json_encode($temp_content));
+        return back();
     }
 
     public function edit_images(Request $request, $id) {
@@ -166,12 +174,21 @@ class ContentController extends Controller {
         $input = $request->all();
 
         if(isset($input['type']) && $input['type'] != 'all') {
+            $inputSelected = $input['type'];
             $contents = Content::with('parent')->whereRaw('version_of = ? AND type = ?', [0, $input['type']])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
         } else {
+            $inputSelected = 'all';
             $contents = Content::with('parent')->whereRaw('version_of = ?', [0])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
         }
 
-        return response(json_encode($contents));
+        $content_list = ['' => 'Select parent...'] + Content::where('version_of', 0)->lists('title', 'id')->toArray();
+        $filters = [
+            'all' => 'All',
+            'page' => 'Pages',
+            'post' => 'Posts'
+        ];
+
+        return view('content.view', ['contents' => $contents, 'content_list' => $content_list, 'filters' => $filters, 'input_selected' => $inputSelected]);
     }
 
     public function single($identifier, $contentType = false) {
@@ -210,18 +227,17 @@ class ContentController extends Controller {
     }
 
     public function history_view( $id ) {
-        $content = Content::whereRaw('version_of = ? OR id = ?', [$id, $id])->orderBy('id', 'asc')->get();
-        return response(json_encode($content));
+        $content = Content::whereRaw( 'version_of = ? OR id = ?', [$id, $id] )->orderBy('id', 'asc')->get();
+        $content_list = ['' => 'Select parent...'] + Content::where('parent_id', 0 )->lists('title', 'id')->toArray();
+
+        return view('content.single-history', ['content' => $content, 'content_list' => $content_list]);
     }
 
     public function compare( $id ) {
-        $version_old = Content::find($id);
+        $version_old = Content::find( $id );
         $version_current = Content::find( $version_old->version_of );
 
-        return response(json_encode([
-            'previous' => $version_old,
-            'current' => $version_current
-        ]));
+        return view('content.compare', ['version_old' => $version_old, 'version_current' => $version_current]);
     }
 
     public function revert( $id ) {
@@ -241,7 +257,7 @@ class ContentController extends Controller {
         $current_page->save();
         $new_version_created = $this->create_revision( $new_version_values );
 
-        return response(json_encode($current_page));
+        return redirect()->route('content_single', ['id' => $current_page->id]);
     }
 
     public function create_revision($new_revision) {

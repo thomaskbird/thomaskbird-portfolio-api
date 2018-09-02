@@ -11,6 +11,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function cleanFilename($filename) {
+        return preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '', $filename);
+    }
+
     public function columnize($arr, $num) {
         $total = count($arr);
         $per_column = floor($total / $num);
