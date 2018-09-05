@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('homepage') }}"><span class="logo logo-main">ThomasBird</span> <span class="logo logo-sub">FullStackDeveloper</span></a>
+            <span class="logo logo-main">ThomasBird</span> <span class="logo logo-sub">FullStackDeveloper</span>
         </div>
 
         <nav class="collapse navbar-collapse menu">
