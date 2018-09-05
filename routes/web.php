@@ -3,6 +3,7 @@
 Route::group(['middleware' => 'web'], function () {
 
     Route::get('/login', ['as' => 'login_form', 'uses' => 'PublicController@login']);
+    Route::post('/login', ['as' => 'login_attempt', 'uses' => 'AuthenticationController@login']);
     Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
 
 });
