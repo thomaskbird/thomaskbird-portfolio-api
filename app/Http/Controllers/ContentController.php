@@ -181,7 +181,7 @@ class ContentController extends Controller {
             $contents = Content::with('parent')->whereRaw('version_of = ?', [0])->orderBy('created_at', 'desc')->paginate(Config('global.paginate'));
         }
 
-        $content_list = ['' => 'Select parent...'] + Content::where('version_of', 0)->lists('title', 'id')->toArray();
+        $content_list = ['' => 'Select parent...'] + Content::where('version_of', 0)->pluck('title', 'id')->toArray();
         $filters = [
             'all' => 'All',
             'page' => 'Pages',
@@ -228,7 +228,7 @@ class ContentController extends Controller {
 
     public function history_view( $id ) {
         $content = Content::whereRaw( 'version_of = ? OR id = ?', [$id, $id] )->orderBy('id', 'asc')->get();
-        $content_list = ['' => 'Select parent...'] + Content::where('parent_id', 0 )->lists('title', 'id')->toArray();
+        $content_list = ['' => 'Select parent...'] + Content::where('parent_id', 0 )->pluck('title', 'id')->toArray();
 
         return view('content.single-history', ['content' => $content, 'content_list' => $content_list]);
     }
