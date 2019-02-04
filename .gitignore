@@ -4,6 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor
+**/*.DS_Store
 /.idea
 /.vscode
 /.vagrant

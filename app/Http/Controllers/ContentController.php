@@ -300,4 +300,12 @@ class ContentController extends Controller {
         $jobs = Job::orderBy('start', 'desc')->get();
         return response(json_encode($jobs));
     }
+
+    public function resume_print_word($type) {
+        if($type === 'doc') {
+            $jobs = Job::orderBy('start', 'desc')->get();
+            $resume_view = view('public.resume-print-doc', ['jobs' => $jobs]);
+            return $resume_view;
+        }
+    }
 }
