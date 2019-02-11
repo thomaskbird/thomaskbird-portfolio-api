@@ -301,10 +301,10 @@ class ContentController extends Controller {
         return response(json_encode($jobs));
     }
 
-    public function resume_print_word($type) {
+    public function resume_download_word($type) {
         if($type === 'doc') {
             $jobs = Job::orderBy('start', 'desc')->get();
-            $resume_view = view('public.resume-print-doc', ['jobs' => $jobs]);
+            $resume_view = view('public.resume-download-format-doc', ['jobs' => $jobs]);
             return $resume_view;
         }
     }

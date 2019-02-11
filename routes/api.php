@@ -25,7 +25,7 @@ Route::get('/home', ['as' => 'home', 'uses' => 'ContentController@home']);
 Route::post('/contact', ['as' => 'contact', 'uses' => 'CommunicationController@contact']);
 Route::get('/sidebar_data', ['as' => 'sidebar_data', 'uses' => 'ContentController@sidebar_data']);
 Route::get('/resume', ['as' => 'resume', 'uses' => 'ContentController@resume']);
-Route::get('/resume/print/{type}', ['as' => 'resume_print_word', 'uses' => 'ContentController@resume_print_word']);
+Route::get('/resume/download/{type}', ['as' => 'resume_download_word', 'uses' => 'ContentController@resume_download_word']);
 Route::get('/search/{term}', ['as' => 'search', 'uses' => 'ContentController@search']);
 
 Route::get('/services', ['as' => 'services', 'uses' => 'ContentController@services']);
