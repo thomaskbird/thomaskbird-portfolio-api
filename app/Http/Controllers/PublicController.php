@@ -61,12 +61,12 @@ class PublicController extends Controller {
     }
 
     public function resume() {
-        $jobs = Job::orderBy('start', 'desc')->get();
+        $jobs = Job::orderBy('start_at', 'desc')->get();
         return view('public.resume', ['jobs' => $jobs]);
     }
 
     public function resume_print() {
-        $jobs = Job::orderBy('start', 'desc')->get();
+        $jobs = Job::orderBy('start_at', 'desc')->get();
         return view('public.resume-print', ['jobs' => $jobs]);
     }
 

@@ -1,11 +1,17 @@
 <?php
+$filename = date('Y-m-d') ."-thomas-k-bird-resume.doc";
 
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=document_name.doc");
+header("Content-type: application/msword");
+header("Pragma: public"); // required
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private",false); // required for certain browsers
+header("Content-Disposition: attachment; filename=\"".$filename."\";" );
+header("Content-Transfer-Encoding: binary");
 
 ?>
 
-<h2 class="page-header" id="about-me">About me</h2>
+<b>About me</b>
 
 <p>I have a diverse skill set complemented by having worked in a wide range of environments, ranging from large teams to small teams and freelance work. This diversity has helped me understand the web development process from start to finish having held many roles with multiple skill sets ranging from client services, design, front end and backend programming. This has helped me create better, well rounded applications that are both extensible and easy to use while also being aesthetically pleasing.</p>
 
