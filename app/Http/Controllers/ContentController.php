@@ -297,13 +297,13 @@ class ContentController extends Controller {
     }
 
     public function resume() {
-        $jobs = Job::orderBy('start', 'desc')->get();
+        $jobs = Job::orderBy('start_at', 'desc')->get();
         return response(json_encode($jobs));
     }
 
     public function resume_download_word($type) {
         if($type === 'doc') {
-            $jobs = Job::orderBy('start', 'desc')->get();
+            $jobs = Job::orderBy('start_at', 'desc')->get();
             $resume_view = view('public.resume-download-format-doc', ['jobs' => $jobs]);
             return $resume_view;
         }

@@ -9,5 +9,9 @@ class Job extends Model {
      *
      * @var array
      */
-    protected $fillable = ['logo', 'company', 'title', 'start_at', 'end_at', 'body', 'type', 'skills', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['logo', 'company_id', 'title', 'start_at', 'end_at', 'body', 'type', 'skills', 'created_at', 'updated_at', 'deleted_at'];
+
+    public function company() {
+        return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
 }

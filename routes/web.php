@@ -12,6 +12,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function() {
 
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
 
+    // company routes
+    Route::get('companies', ['as' => 'companies', 'uses' => 'CompanyController@view']);
+    Route::get('companies', ['as' => 'companies_single', 'uses' => 'CompanyController@single']);
+
     // content routes
     Route::get('content', ['as' => 'content', 'uses' => 'ContentController@view']);
     Route::get('content/{id}', ['as' => 'content_single', 'uses' => 'ContentController@single']);

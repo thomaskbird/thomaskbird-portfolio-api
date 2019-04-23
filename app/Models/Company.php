@@ -2,20 +2,20 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model {
+class Company extends Model {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'projects';
+    protected $table = 'companies';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['company_id', 'description', 'technologies', 'start_at', 'end_at', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['name', 'description', 'address_1', 'address_2', 'city', 'state', 'zip', 'phone', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -23,8 +23,4 @@ class Project extends Model {
      * @var array
      */
     protected $hidden = [];
-
-    public function company() {
-        return $this->hasOne('App\Models\Company', 'id', 'parent_id');
-    }
 }
