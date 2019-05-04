@@ -6,6 +6,9 @@ Route::post('content/tag/delete', ['as' => 'content_tag_delete', 'uses' => 'TagC
 Route::post('upload', ['as' => 'file_upload', 'uses' => 'UploadController@upload']);
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('/', function() {
+        return redirect()->route('login_form');
+    });
     Route::get('/login', ['as' => 'login_form', 'uses' => 'PublicController@login']);
     Route::post('/login', ['as' => 'login_attempt', 'uses' => 'AuthenticationController@login']);
     Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);

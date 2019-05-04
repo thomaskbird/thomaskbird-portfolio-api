@@ -30,7 +30,7 @@ Route::get('/search/{term}', ['as' => 'search', 'uses' => 'ContentController@sea
 
 Route::get('/services', ['as' => 'services', 'uses' => 'ContentController@services']);
 Route::get('/content/', ['as' => 'content', 'uses' => 'ContentController@view']);
-Route::get('/content/{identifier}/{contentType?}', ['as' => 'content_single', 'uses' => 'ContentController@single']);
+Route::get('/content/{identifier}/{contentType?}', ['as' => 'api_single', 'uses' => 'ContentController@api_single']);
 
 
 Route::get('/tag/{slug}', ['as' => 'tag_view', 'uses' => 'ContentController@tag_view']);

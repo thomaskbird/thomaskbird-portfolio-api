@@ -234,6 +234,41 @@ class ContentController extends Controller {
         ]);
     }
 
+    public function api_single($identifier, $contentType = false) {
+        switch($contentType) {
+            case 'skill':
+                if(is_numeric($identifier)) {
+                    $content = Skill::where('id', $identifier)->first();
+                } else {
+                    $content = Skill::where('slug', $identifier)->first();
+                }
+                break;
+            case 'job':
+                if(is_numeric($identifier)) {
+                    $content = Job::where('id', $identifier)->first();
+                } else {
+                    $content = Job::where('company', $identifier)->first();
+                }
+                break;
+            case 'service':
+                if(is_numeric($identifier)) {
+                    $content = Service::where('id', $identifier)->first();
+                } else {
+                    $content = Service::where('slug', $identifier)->first();
+                }
+                break;
+            default:
+                if(is_numeric($identifier)) {
+                    $content = Content::with('parent', 'portfolio')->whereRaw('id = ? AND version_of = ?', [$identifier, 0])->with('portfolio')->first();
+                } else {
+                    $content = Content::with('parent', 'portfolio')->whereRaw('slug LIKE ? AND version_of = ?', [$identifier, 0])->with('portfolio')->first();
+                }
+                break;
+        }
+
+        return response(json_encode($content));
+    }
+
     public function history_view( $id ) {
         $content = Content::whereRaw( 'version_of = ? OR id = ?', [$id, $id] )->orderBy('id', 'asc')->get();
         $content_list = ['' => 'Select parent...'] + Content::where('parent_id', 0 )->pluck('title', 'id')->toArray();
