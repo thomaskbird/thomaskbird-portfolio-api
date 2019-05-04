@@ -106,7 +106,7 @@ class TagController extends Controller {
                 'content_tag_id' => $content_tag->id
             ];
         } else {
-            return 'Uh oh, something went wrong please try again!';
+            return ['Uh oh, something went wrong please try again!'];
         }
     }
 

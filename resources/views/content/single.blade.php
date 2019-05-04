@@ -90,7 +90,15 @@
             </div>
 
             @foreach($tags as $tag)
-                <span class="tag-selectable label @if(in_array($tag->id, $content_tags)) label-primary @else label-default @endif" data-tag-id="{{ $tag->id }}" data-content-id="{{ $content->id }}">{{ $tag->title }}</span>
+                <span
+                    class="tag-selectable label
+                        @if(in_array($tag->id, $content_tags)) label-primary
+                        @else label-default @endif"
+                    data-tag-id="{{ $tag->id }}"
+                    data-content-id="{{ $content->id }}"
+                >
+                    {{ $tag->title }}
+                </span>
             @endforeach
 
         </div>

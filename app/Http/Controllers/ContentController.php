@@ -223,7 +223,15 @@ class ContentController extends Controller {
             break;
         }
 
-        return response(json_encode($content));
+        $content_list = ['' => 'Select parent...'] + Content::where('parent_id', 0 )->pluck('title', 'id')->toArray();
+        $tags = Tag::all();
+
+        return view('content.single', [
+            'content' => $content,
+            'content_list' => $content_list,
+            'tags' => $tags,
+            'content_tags' => $content->tags->pluck('id')->toArray()
+        ]);
     }
 
     public function history_view( $id ) {
@@ -257,7 +265,9 @@ class ContentController extends Controller {
         $current_page->save();
         $new_version_created = $this->create_revision( $new_version_values );
 
-        return redirect()->route('content_single', ['id' => $current_page->id]);
+        return redirect()->route('content_single', [
+            'id' => $current_page->id
+        ]);
     }
 
     public function create_revision($new_revision) {

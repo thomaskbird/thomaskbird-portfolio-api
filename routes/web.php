@@ -1,11 +1,14 @@
 <?php
 
-Route::group(['middleware' => 'web'], function () {
+// content tag routes
+Route::post('content/tag/add', ['as' => 'content_tag_add', 'uses' => 'TagController@content_tag_create']);
+Route::post('content/tag/delete', ['as' => 'content_tag_delete', 'uses' => 'TagController@content_tag_remove']);
+Route::post('upload', ['as' => 'file_upload', 'uses' => 'UploadController@upload']);
 
+Route::group(['middleware' => 'web'], function () {
     Route::get('/login', ['as' => 'login_form', 'uses' => 'PublicController@login']);
     Route::post('/login', ['as' => 'login_attempt', 'uses' => 'AuthenticationController@login']);
     Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
-
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function() {
